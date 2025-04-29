@@ -1,11 +1,9 @@
 {
-  "name": "whatsapp-auto-status-bot",
+  "name": "whatsapp-status-bot",
   "version": "1.0.0",
-  "description": "WhatsApp bot with auto-status viewing, reactions, and bio updates",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no tests specified\" && exit 1"
+    "start": "node index.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.6.0",
