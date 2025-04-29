@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Auto-Status Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ffcc;
+            --bg: #0f2027;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 20px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .feature i {
+            color: var(--primary);
+            margin-right: 10px;
+            font-size: 20px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 16px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            background: var(--primary);
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background: #00e6b8;
+            transform: translateY(-2px);
+        }
+        
+        button:disabled {
+            background: #cccccc;
+            cursor: not-allowed;
+        }
+        
+        #result {
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(0, 255, 204, 0.1);
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .code {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin: 10px 0;
+            word-break: break-all;
+        }
+        
+        .loader {
+            display: none;
+            border: 3px solid rgba(0, 255, 204, 0.3);
+            border-top: 3px solid var(--primary);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            margin: 10px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i class="fas fa-robot"></i> WhatsApp Auto-Status Bot</h1>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-eye"></i>
+                <span>Auto-Status Viewing</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-heart"></i>
+                <span>Auto-Status Reactions</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sync-alt"></i>
+                <span>Auto-Bio Updates (every minute)</span>
+            </div>
+        </div>
+        
+        <input type="tel" id="number" placeholder="Country code + number (e.g. 254712345678)" required>
+        <button id="submit">
+            <span id="button-text">GET PAIRING CODE</span>
+            <div class="loader" id="loader"></div>
+        </button>
+        
+        <div id="result">
+            <h3>Your Pairing Code:</h3>
+            <div class="code" id="code"></div>
+            <p>Enter this code in WhatsApp > Linked Devices</p>
+        </div>
+        
+        <div class="footer">
+            <p>By using this service, you agree to our terms of service</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('submit').addEventListener('click', async () => {
+            const number = document.getElementById('number').value.trim();
+            const result = document.getElementById('result');
+            const codeElement = document.getElementById('code');
+            const button = document.getElementById('submit');
+            const buttonText = document.getElementById('button-text');
+            const loader = document.getElementById('loader');
+            
+            if (!number) {
+                result.style.display = 'block';
+                codeElement.textContent = 'Please enter your WhatsApp number';
+                return;
+            }
+            
+            // Show loading
+            button.disabled = true;
+            buttonText.style.display = 'none';
+            loader.style.display = 'block';
+            result.style.display = 'none';
+            
+            try {
+                const response = await fetch(`/code?number=${encodeURIComponent(number)}`);
+                const data = await response.json();
+                
+                if (data.code) {
+                    result.style.display = 'block';
+                    codeElement.textContent = data.code;
+                } else {
+                    throw new Error(data.error || 'Failed to get pairing code');
+                }
+            } catch (error) {
+                result.style.display = 'block';
+                codeElement.textContent = error.message;
+            } finally {
+                button.disabled = false;
+                buttonText.style.display = 'block';
+                loader.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+  </html>
