@@ -7,7 +7,7 @@ const {
     delay,
     Browsers
 } = require('@whiskeysockets/baileys');
-const { upload } = require('./mega');
+const { upload } = require('./mega.js');
 const { startStatusWatcher } = require('./bot/statusWatcher');
 const { startBioUpdater } = require('./bot/bioUpdater');
 
