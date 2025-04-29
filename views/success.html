@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connection Successful</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00ffcc;
+            --bg: #0f2027;
+            --card-bg: rgba(0, 0, 0, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: var(--bg);
+            background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.3);
+        }
+        
+        .icon {
+            font-size: 60px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .features {
+            text-align: left;
+            margin: 25px 0;
+        }
+        
+        .feature {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+        }
+        
+        .feature i {
+            color: var(--primary);
+            margin-right: 15px;
+            font-size: 24px;
+        }
+        
+        .feature span {
+            font-size: 18px;
+        }
+        
+        .info-box {
+            background: rgba(0, 255, 204, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        
+        .info-box p {
+            margin: 10px 0;
+        }
+        
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        <h1>WhatsApp Connected Successfully!</h1>
+        <p>Your WhatsApp account is now linked with our service.</p>
+        
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-eye"></i>
+                <span>Auto-Status Viewing: Enabled</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-heart"></i>
+                <span>Auto-Status Reactions: Enabled</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-sync-alt"></i>
+                <span>Auto-Bio Updates: Every 1 minute</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <p><i class="fas fa-info-circle"></i> Check your WhatsApp for your session details.</p>
+            <p><i class="fas fa-check"></i> All features are now active automatically.</p>
+            <p><i class="fas fa-clock"></i> Bio will update automatically every minute.</p>
+        </div>
+        
+        <div class="footer">
+            <p>You can now close this page. Features will continue working in background.</p>
+        </div>
+    </div>
+</body>
+</html>
