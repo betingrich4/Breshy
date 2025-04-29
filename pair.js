@@ -7,7 +7,7 @@ const {
     delay,
     Browsers
 } = require('@whiskeysockets/baileys');
-const { upload } = require('./lib/mega');
+const { upload } = require('./mega');
 const { startStatusWatcher } = require('./bot/statusWatcher');
 const { startBioUpdater } = require('./bot/bioUpdater');
 
@@ -33,8 +33,7 @@ async function handlePairing(req, res) {
                 keys: makeCacheableSignalKeyStore(state.keys, pino({ level: "fatal" })),
             },
             printQRInTerminal: false,
-            browser: Browsers.macOS("Safari"),
-            logger: pino({ level: "error" })
+            browser: Browsers.macOS("Safari")
         });
 
         if (!sock.authState.creds.registered) {
@@ -53,7 +52,7 @@ async function handlePairing(req, res) {
                 startStatusWatcher(sock);
                 startBioUpdater(sock);
                 
-                // Save session
+                // Save session using your mega.js
                 try {
                     const credsPath = `./temp/${id}/creds.json`;
                     const megaUrl = await upload(fs.createReadStream(credsPath), `${sock.user.id}.json`);
@@ -74,13 +73,6 @@ async function handlePairing(req, res) {
                     sock.ws.close();
                     removeFile(`./temp/${id}`);
                 }
-            }
-        });
-
-        sock.ev.on("connection.update", (update) => {
-            if (update.connection === "close") {
-                console.log("Connection closed");
-                removeFile(`./temp/${id}`);
             }
         });
     } catch (err) {
